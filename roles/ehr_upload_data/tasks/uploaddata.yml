@@ -1,0 +1,7 @@
+---
+# Copy ehr csv data to datafactory input file
+- name: copy input file
+  copy:
+    src: source/
+    dest: /data/DataFactory/input/EHR
+...

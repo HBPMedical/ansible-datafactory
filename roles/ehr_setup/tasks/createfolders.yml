@@ -1,0 +1,150 @@
+---
+# Create Data Factory folders
+- name: create DataFactory config folder 
+  file:
+    path: /opt/DataFactory
+    state: directory
+    group: "{{ df_user }}"
+    recurse: yes
+
+- name: create DataFactory data folder 
+  file:
+    path: /data/DataFactory
+    state: directory
+    group: "{{ df_user }}"
+    recurse: yes
+
+
+- name: create DataFactory input folder 
+  file:
+    path: /data/DataFactory/input
+    state: directory
+    mode: u=rwx,g=rwx,o=rw
+    group: "{{ df_user }}"
+    recurse: yes
+
+- name: create DataFactory EHR data input folder 
+  file:
+    path: /data/DataFactory/input/EHR
+    state: directory
+    group: "{{ df_user }}"
+    mode: u=rwx,g=rwx,o=rw
+    recurse: yes
+
+- name: create DataFactory DICOM data input folder 
+  file:
+    path: /data/DataFactory/input/DICOM
+    state: directory
+    mode: u=rwx,g=rwx,o=rw
+    group: "{{ df_user }}"
+    recurse: yes
+
+- name: create DataFactory data output folder 
+  file:
+    path: /data/DataFactory/output/
+    state: directory
+    mode: u=rwx,g=rwx,o=rw
+    group: "{{ df_user }}"
+    recurse: yes
+
+- name: create DataFactory anonymized data output folder 
+  file:
+    path: /data/DataFactory/anonymized_output/
+    state: directory
+    mode: u=rwx,g=rwx,o=rw
+    group: "{{ df_user }}"
+    recurse: yes
+
+- name: create preprocess config folder
+  file:
+    path: /opt/DataFactory/preprocess_step
+    state: directory
+    mode: u=rwx,g=rwx,o=rx
+    group: "{{ df_user }}"
+    recurse: yes
+
+- name: create capture config folder
+  file:
+    path: /opt/DataFactory/capture_step
+    state: directory
+    mode: u=rwx,g=rwx,o=rx
+    group: "{{ df_user }}"
+    recurse: yes
+
+- name: create db properties folder
+  file:
+    path: /opt/DataFactory/dbproperties
+    state: directory
+    mode: u=rwx,g=rwx,o=r
+    group: "{{ df_user }}"
+    recurse: yes
+
+- name: create db setup folder
+  file:
+    path: /opt/DataFactory/dbsetup
+    state: directory
+    mode: u=rwx,g=rwx,o=r
+    group: "{{ df_user }}"
+    recurse: yes
+
+# Copy and create folders with included files
+
+- name: copy export step sql scripts
+  copy:
+    src: export_step/
+    dest: /opt/DataFactory/export_step
+    group: "{{ df_user }}"
+    mode: u=rwx,g=rwx,o=rx
+
+- name: copy harmonize script
+  copy:
+    src: harmonize_step/
+    dest: /opt/DataFactory/harmonize_step
+    group: "{{ df_user }}"
+    mode: u=rwx,g=rwx,o=rx
+
+# Create folders and tranform template files
+
+- name: db i2b2 capture properties templating
+  template:
+    src: dbproperties/i2b2-db.properties.j2
+    dest: /opt/DataFactory/dbproperties/i2b2-db.properties
+
+- name: db  i2b2 harmonized properties templating
+  template:
+    src: dbproperties/i2b2-db-harmonized.properties.j2
+    dest: /opt/DataFactory/dbproperties/i2b2-db-harmonized.properties
+
+- name: db mipmap properties templating
+  template:
+    src: dbproperties/mipmap-db.properties.j2
+    dest: /opt/DataFactory/dbproperties/mipmap-db.properties
+
+- name: docker compose templating
+  template:
+    src: docker-compose.yml.j2
+    dest: /opt/DataFactory/docker-compose.yml
+
+- name: ingestdata.sh script templating
+  template:
+    src: scripts/ingestdata.sh.j2
+    dest: /opt/DataFactory/ingestdata.sh
+    group: "{{ df_user }}"
+    mode: u=rwx,g=rwx,o=rx
+
+- name: anonymize.sh script templating
+  template:
+    src: scripts/anonymize.sh.j2
+    dest: /opt/DataFactory/anonymize.sh
+    group: "{{ df_user }}"
+    mode: u=rwx,g=rwx,o=rx
+
+- name: build_dbs.sh script templating
+  template:
+    src: scripts/build_dbs.sh.j2
+    dest: /opt/DataFactory/dbsetup/build_dbs.sh
+
+- name: db docker compose script templating
+  template:
+    src: db-docker-compose/docker-compose.yml.j2
+    dest: /opt/DataFactory/dbsetup/docker-compose.yml

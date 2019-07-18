@@ -1,0 +1,4 @@
+---
+# tasks file for ehr datafactory
+- include_tasks: uploadharmonize.yml
+

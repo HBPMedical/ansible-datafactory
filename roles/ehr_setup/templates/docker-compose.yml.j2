@@ -1,0 +1,48 @@
+#                    Copyright (c) 2019-2020
+#                      AUEB, ATHENS
+#
+#                      All Rights Reserved.
+#
+# Permission to use, copy, modify and distribute this software and its
+# documentation is hereby granted, provided that both the copyright notice
+# and this permission notice appear in all copies of the software, derivative
+# works or modified versions, and any portions thereof, and that both notices
+# appear in supporting documentation.
+#
+# This code is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+# A PARTICULAR PURPOSE. THE AUTHORS AND ECOLE POLYTECHNIQUE FEDERALE DE LAUSANNE
+# DISCLAIM ANY LIABILITY OF ANY KIND FOR ANY DAMAGES WHATSOEVER RESULTING FROM THE
+# USE OF THIS SOFTWARE.
+
+version: '2'
+
+services:
+
+  mipmap_etl:
+    image: "hbpmip/mipmap"
+    container_name: "mipmap"
+    volumes:
+      - "${mipmap_map}:/opt/map:rw"
+      - "${mipmap_source}:/opt/source:rw"
+      - "${mipmap_pgproperties}:/opt/postgresdb.properties:rw"
+    environment:
+      - mipmap_db_host={{ postgresql_container }}
+      - mipmap_db_port={{ postgresql_port }}
+      - mipmap_db_name={{ mipmap_db }}
+      - mipmap_db_user={{ postgresql_user }}
+      - mipmap_db_password={{ postgresql_pwd }}
+      - i2b2_db_host={{ postgresql_container }}
+      - i2b2_db_port={{ postgresql_port }}
+      - i2b2_db_name={{ capture_db }}
+      - i2b2_db_user={{ postgresql_user }}
+      - i2b2_db_password={{ postgresql_pwd }}
+      - i2b2_db_harmonized_host={{ postgresql_container }}
+      - i2b2_db_harmonized_port={{ postgresql_port }}
+      - i2b2_db_harmonized_name={{ harmonize_db }}
+      - i2b2_db_harmonized_user={{ postgresql_user }}
+      - i2b2_db_harmonized_password={{ postgresql_pwd }}
+    external_links:
+      - "{{ postgresql_container }}:postgres_container"
+    command: ['/opt/map/run.sh']
+    network_mode: bridge

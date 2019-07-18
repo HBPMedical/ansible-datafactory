@@ -1,0 +1,7 @@
+---
+# Copy harmonization mapping config files
+- name: copy harmonization mapping file
+  copy:
+    src: harmonize_step/
+    dest: /opt/DataFactory/harmonize_step
+...

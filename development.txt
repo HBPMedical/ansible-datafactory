@@ -1,0 +1,5 @@
+[controller]
+control ansible_connection=local
+
+[hospitalserver]
+172.16.10.32 ansible_user=iosif 

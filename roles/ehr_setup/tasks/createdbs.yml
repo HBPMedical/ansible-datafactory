@@ -1,0 +1,37 @@
+---
+# install python libs
+- name: install python pip3
+  apt:
+    name: python3-pip
+
+
+- name: install docker python lib
+  pip:
+    name: docker 
+
+
+# Create mipmap i2b2 databases
+- name: creating mipmap databases 
+  command: sh /opt/DataFactory/dbsetup/build_dbs.sh
+
+- name: setup i2b2 capture db
+  docker_container:
+    name: 'i2b2-setup-capture'
+    recreate: true
+    image: 'hbpmip/i2b2-setup:1.5.2'
+    command: 'upgrade head'
+    env:
+      DB_URL: 'postgresql://{{ postgresql_user }}:{{ postgresql_pwd }}@postgres_host:{{ postgresql_port }}/{{ capture_db }}'
+    links: 
+      - '{{ postgresql_container }}:postgres_host'
+
+- name: setup i2b2 harmonize db
+  docker_container:
+    name: 'i2b2-setup-harmonized'
+    recreate: true
+    image: 'hbpmip/i2b2-setup:1.5.2'
+    command: 'upgrade head'
+    env:
+      DB_URL: 'postgresql://{{ postgresql_user }}:{{ postgresql_pwd }}@postgres_host:{{ postgresql_port }}/{{ harmonize_db }}'
+    links: 
+      - '{{ postgresql_container }}:postgres_host'

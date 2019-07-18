@@ -1,0 +1,6 @@
+---
+# tasks file for ehr datafactory
+- include_tasks: config_df.yml
+- include_tasks: createfolders.yml
+- include_tasks: createdbs.yml
+...

@@ -1,0 +1,4 @@
+---
+# tasks for upload csv ehr data files into df input folder
+- include_tasks: uploaddata.yml
+...

@@ -1,0 +1,24 @@
+- hosts: hospitalserver
+  vars:
+    postgresql_container: "test_postgres"
+    postgresql_user: "postgres"
+    postgresql_pwd: "1234"
+    postgresql_port: "5432"
+    capture_db: "i2b2_capture"
+    harmonize_db: "i2b2_harmonized"
+    mipmap_db: "mipmap"
+    df_user: "datafactory"
+    df_pwd: "$6$YrESLr0sjlQFF$05g9uWjaAWa08J3Gaid3ZrYSkDIHpNOhrNoxZvCkhxbcA726Ez6MgY4/D6Lm5DcgN8fVxQ85eEKfXJcItFGfy1"
+    df_db_properties: /opt/DataFactory/dbproperties
+    df_output_path: /data/DataFactory/output/
+    df_anon_output_path: /data/DataFactory/anonymized_output/
+    df_source_path: /data/DataFactory/input/EHR
+    mipmap_preprocess: /opt/DataFactory/preprocess_step
+    mipmap_capture: /opt/DataFactory/capture_step
+    mipmap_harmonize: /opt/DataFactory/harmonize_step
+    mipmap_export: /opt/DataFactory/export_step
+
+  become: true
+  roles:
+  - ehr_setup
+...

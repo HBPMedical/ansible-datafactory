@@ -1,0 +1,9 @@
+---
+# Copy  capture mapping task config files 
+
+- name: copy capture mapping files
+  copy:
+    src: capture_step/
+    dest: /opt/DataFactory/capture_step
+    group: "{{ df_user }}"
+...
