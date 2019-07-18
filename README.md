@@ -18,17 +18,20 @@ Ansible deployment script for DataFactory. Creates the folders and scripts neede
 
 Update the `datafactory.yml` **var** section with the hospital server's postgres container name, port, postgres user and password. The scripts creates `datafactory`
 linux user. For changing the default password use **whois** tool and run in terminal:
+
 ```shell
-mkpasswd --method=sha-512 
+mkpasswd --method=sha-512
 ```
+
 Give the new password and copy the hashed string and update **df_pwd** key in `datafactory.yml`.
 
-- add role **docker** for docker-compose deployment if it hasn't been allready installed.
+- add role **docker** for docker-compose deployment if it hasn't been already installed.
 
 - add role **ehr_setup** for initial DataFactory deployment.
-**Caution!** The following creation script drop any prexisting DataFactory database. Skip this step if there is no such need *i.e. when importing a second batch of hospital data.*
+**Caution!** The following creation script drop any pre-existing DataFactory database. Skip this step if there is no such need *i.e. when importing a second batch of hospital data.*
 
 executing the deployment scripts
+
 ```shell
 ansible-playbook --ask-become-pass datafactory.yml 
 ```
@@ -45,12 +48,10 @@ ansible-playbook --ask-become-pass datafactory.yml
 - add role **ehr_upload_capture**
 - copy config files into the folder `roles/ehr_upload_capture/files/capture_step`
 
-
 #### Harmonize step
 
 - add role **ehr_upload_harmonize**
 - copy config files into the folder `roles/ehr_upload_harmonize/files/harmonize_step`
-
 
 ### Data Factory Folders
 
@@ -80,7 +81,6 @@ ansible-playbook --ask-become-pass datafactory.yml
 | MIPMAP_CAPTURE           | path of DataFactory capture config folder      |
 | MIPMAP_HARMONIZE         | path of DataFactory harmonize config folder    |
 | MIPMAP_EXPORT            | path of DataFactory export sql scripts folder  |
-
 
 ## Running EHR DataFactory pipeline
 
