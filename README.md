@@ -28,6 +28,11 @@ Give the new password and copy the hashed string and update **df_pwd** key in `d
 - add role **ehr_setup** for initial DataFactory deployment.
 **Caution!** The following creation script drop any prexisting DataFactory database. Skip this step if there is no such need *i.e. when importing a second batch of hospital data.*
 
+executing the deployment scripts
+```shell
+ansible-playbook --ask-become-pass datafactory.yml 
+```
+
 ### Upload mapping config files
 
 #### Preprocess step
