@@ -6,6 +6,10 @@ Ansible deployment script for DataFactory. Creates the folders and scripts neede
 
 ## Requirements
 
+- ansible 2.8.2 or greater
+
+## Requirements for hospital server
+
 - ubuntu 16.04
 - docker 18.09 or greater
 - docker-compose 1.22.0 or greater
