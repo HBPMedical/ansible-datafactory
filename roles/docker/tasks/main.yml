@@ -1,5 +1,0 @@
----
-
-- include_tasks: docker-compose.yml
-  when: docker_install_compose
-...

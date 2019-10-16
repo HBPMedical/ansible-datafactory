@@ -1,9 +1,0 @@
----
-# Copy ehr preprocessing config files
-- name: copy preprocessing files
-  copy:
-    src: preprocess_step/
-    dest: /opt/DataFactory/preprocess_step
-...
-
-

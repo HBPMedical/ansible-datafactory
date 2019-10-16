@@ -13,43 +13,14 @@
       - sudo
 
 # set enviroment variables for datafactory user
-- name: add enviroment variable DF_DB_PROPERTIES 
-  lineinfile:
-    path: "/etc/environment"
-    line: "DF_DB_PROPERTIES={{ df_db_properties }}"
 
-- name: add enviroment variable DF_OUTPUT_PATH 
+- name: add enviroment variable DF_PATH 
   lineinfile:
     path: "/etc/environment"
-    line: "DF_OUTPUT_PATH={{ df_output_path }}"
+    line: "DF_PATH={{ df_installation_path }}"
 
-- name: add enviroment variable DF_ANON_OUTPUT_PATH
+- name: add enviroment variable DF_DATA_PATH 
   lineinfile:
     path: "/etc/environment"
-    line: "DF_ANON_OUTPUT_PATH={{ df_anon_output_path }}"
-
-- name: add enviroment variable DF_SOURCE_PATH
-  lineinfile:
-    path: "/etc/environment"
-    line: "DF_SOURCE_PATH={{ df_source_path }}"
-
-- name: add enviroment variable MIPMAP_PREPROCESS
-  lineinfile:
-    path: "/etc/environment"
-    line: "MIPMAP_PREPROCESS={{ mipmap_preprocess }}"
-
-- name: add enviroment variable MIPMAP_CAPTURE
-  lineinfile:
-    path: "/etc/environment"
-    line: "MIPMAP_CAPTURE={{ mipmap_capture }}"
-
-- name: add enviroment variable MIPMAP_HARMONIZE
-  lineinfile:
-    path: "/etc/environment"
-    line: "MIPMAP_HARMONIZE={{ mipmap_harmonize }}"
-
-- name: add enviroment variable MIPMAP_EXPORT
-  lineinfile:
-    path: "/etc/environment"
-    line: "MIPMAP_EXPORT={{ mipmap_export }}"
+    line: "DF_DATA_PATH={{ df_data_root_path }}"
 ...

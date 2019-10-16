@@ -1,5 +1,0 @@
----
-# tasks for upload capture config files
-- include_tasks: uploadcapture.yml
-...
-

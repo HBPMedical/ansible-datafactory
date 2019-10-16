@@ -1,0 +1,68 @@
+{
+    "hospital_name": "MockHospital",
+    "mipmap":{
+        "dbproperties": "{{ df_db_properties }}",
+        "preprocess": {
+            "root":"{{ mipmap_preprocess }}"
+        },            
+        "capture": {
+            "root": "{{ mipmap_capture }}"
+        },
+        "harmonize": {
+            "root": "{{ mipmap_harmonize }}"
+        },
+        "imaging": {
+            "root": "{{ mipmap_imaging }}",
+            "mapping": {
+                "input_files": ["volumes.csv", "mri_visits.csv"],
+                "processed_files" : ["volumes_df.csv"]
+            }
+        },
+        "input_folders":{
+            "ehr":"{{ df_ehr_input_path }}",
+            "imaging":"{{ df_imaging_source_path }}"
+        }
+    },
+    "sql_scripts_folder":"{{ mipmap_export }}",
+    "flatening":{
+        "export_csv_name": "harmonized_clinical_data.csv",
+        "output_folder": "{{ df_output_path }}",
+        "strategy":{
+            "simple":"pivot_i2b2_MinDate_NEW19_a.sql",
+            "6months": "pivot_i2b2_6_months_MRI_Diag.sql"
+        }
+    },
+    "anonymization":{
+        "anonymized_csv_name": "harmonized_clinical_anon_data.csv",
+        "anonymization_sql": "anonymize_db_ides.sql",
+        "strategy":{
+            "simple": "pivot_i2b2_MinDate_NEW19_a_fed.sql"
+        },
+        "output_folder": "{{ df_anon_output_path }}"
+    },
+    "db_docker":{
+        "container_name": "{{ postgresql_container }}",
+        "postgres_user": "{{ postgresql_user }}",
+        "postgres_pwd": "{{ postgresql_pwd }}",
+        "postgres_port": "{{ postgresql_port }}",
+        "capture_db": "{{ capture_db }}",
+        "harmonize_db": "{{ harmonize_db }}",
+        "mipmap_db": "{{ mipmap_db }}",
+        "anonymized_db": "i2b2_anonymized"
+    },
+    "mri":{
+        "input_folders": {
+            "nifti": {
+                "raw" : "{{ df_nmm_nifti_raw_input }}",
+                "root": "{{ df_nmm_nifti_input }}"
+            },
+            "dicom": {
+                "raw": "{{ df_nmm_dicom_raw_input }}",
+                "root": "{{ df_nmm_dicom_input }}"
+            }
+        },
+        "output_folders": {
+            "spm12" : "{{ df_nmm_spm12_output }}"
+        }
+    }
+}
