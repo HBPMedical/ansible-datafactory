@@ -14,13 +14,13 @@
     df_data_root_path: /data/DataFactory
     df_config_path: /opt/DataFactory/config.json
     df_requirements_path: /opt/DataFactory/requirements.txt
-    df_db_properties: /opt/DataFactory/postgresdb.properties
+    df_db_properties: /opt/DataFactory/dbproperties
     df_output_path: /data/DataFactory/output/
     df_anon_output_path: /data/DataFactory/anonymized_output/
     df_ehr_path: /data/DataFactory/EHR
     df_ehr_input_path: /data/DataFactory/EHR/input
     df_imaging_source_path: /data/DataFactory/imaging/
-    df_nmm_nifti_raw_input: /data/DataFactory/MRI/input/raw/nifti
+    df_nmm_nifti_raw_input: /data/DataFactory/anonymized_output/
     df_nmm_nifti_input: /data/DataFactory/MRI/input/nifti/
     df_nmm_dicom_raw_input: /data/DataFactory/MRI/input/raw/dicom
     df_nmm_dicom_input: /data/DataFactory/MRI/input/dicom
