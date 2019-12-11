@@ -29,14 +29,17 @@
         "output_folder": "{{ df_output_path }}",
         "strategy":{
             "simple":"pivot_i2b2_MinDate_NEW19_a.sql",
-            "6months": "pivot_i2b2_6_months_MRI_Diag.sql"
+            "6months": "pivot_i2b2_6_months_MRI_Diag.sql",
+            "lognitude":"pivot_i2b2_longitudinal.sql"
         }
     },
     "anonymization":{
         "anonymized_csv_name": "harmonized_clinical_anon_data.csv",
         "anonymization_sql": "anonymize_db_ides.sql",
         "strategy":{
-            "simple": "pivot_i2b2_MinDate_NEW19_a_fed.sql"
+            "simple": "pivot_i2b2_MinDate_NEW19_a_fed.sql",
+            "6months": "pivot_i2b2_6_months_MRI_Diag_fed.sql",
+            "lognitude":"pivot_i2b2_longitudinal_fed.sql"
         },
         "output_folder": "{{ df_anon_output_path }}"
     },
