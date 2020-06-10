@@ -1,16 +1,9 @@
 ---
-# create datafactory user
-- name: create user datafactory
-  user:
-    name: "{{ df_user }}"
-    password: "{{ df_pwd }}"
-    comment: DataFactory user
-    state: present
-    shell: /bin/bash
-    createhome: yes
-    groups:
-      - docker
-      - sudo
+# create datafactory group
+- name: create datafactory user group
+  group:
+    name: datafactory
+    
 
 # set enviroment variables for datafactory user
 

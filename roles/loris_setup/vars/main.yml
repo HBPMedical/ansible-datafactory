@@ -1,0 +1,9 @@
+---
+# vars file for loris_setup
+mysql_container_name: "loris_mysql"
+mysql_container_port: "8082"
+mysql_user_pwd: "neopass"
+apache_container_name: "loris_apache"
+apache_container_port: "8088"
+loris_installation_path: /data/LORIS
+...

@@ -2,4 +2,4 @@
 control ansible_connection=local
 
 [hospitalserver]
-172.16.10.39 ansible_user=ubuntu
+172.16.10.153 ansible_user=datafactory

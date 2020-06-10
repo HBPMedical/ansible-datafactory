@@ -1,0 +1,42 @@
+version: "3.2"
+services:
+  mysql:
+    image: mysql:5.7.28
+    restart: always
+    container_name: {{ mysql_container_name }}
+    ports:
+        - "{{ mysql_container_port }}:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD={{ mysql_user_pwd }}
+    networks:
+      loris_net:
+        ipv4_address: 172.28.1.2
+
+  apache-php:
+    build:
+        context: .
+        dockerfile: Dockerfile_php
+    container_name: {{ apache_container_name }}
+    restart: always
+    ports:
+      - "{{ apache_container_port }}:80"
+    volumes:
+      - ./dicom_in/:/data/loris/dicom_in
+      - ./dicom_post/:/data/loris/dicom_post
+      - ./nifti_out/:/data/loris/nifti_out
+      - ./python/:/data/loris/python
+      - ./batch_csvs:/data/loris/csvs
+    links:
+       - mysql
+    depends_on:
+       - mysql
+    networks:
+      loris_net:
+        ipv4_address: 172.28.1.1
+
+networks:
+  loris_net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.28.0.0/16

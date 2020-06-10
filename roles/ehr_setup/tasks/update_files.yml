@@ -1,0 +1,25 @@
+# template files
+- name: setting up config.json 
+  template:
+    src: config.json.j2
+    dest: "{{ df_installation_path }}/config.json"
+
+- name: updating docker-compose.yml file
+  template:
+    src: docker-compose.yml.j2
+    dest: "{{ df_installation_path }}/docker-compose.yml"
+
+- name: updating imaging encountermapping.properties file
+  template:
+    src: encountermapping.properties.j2
+    dest: "{{ mipmap_imaging }}/encountermapping.properties"
+
+- name: updating imaging patientmapping.properties file
+  template:
+    src: patientmapping.properties.j2
+    dest: "{{ mipmap_imaging }}/patientmapping.properties"
+
+- name: updating bash script for creating datafactory dbs
+  template:
+    src: build_dbs.sh.j2
+    dest: "{{ df_installation_path }}/build_dbs.sh"

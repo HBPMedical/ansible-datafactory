@@ -1,0 +1,44 @@
+---
+# tasks file for loris_setup
+- name: create LORIS-for-MIP installation folder 
+  file:
+    path: "{{ loris_installation_path }}"
+    state: directory
+    group: "{{ df_group }}"
+    recurse: yes
+
+
+- name: clone LORIS-for-MIP github repo
+  git:
+    repo: "https://github.com/HBPMedical/LORIS-for-MIP.git"
+    dest: "{{ loris_installation_path }}"
+    force: yes
+
+
+- name: update docker-compose.yml 
+  template:
+    src: docker-compose.yml.j2
+    dest: "{{ loris_installation_path }}/docker-compose.yml"
+
+- name: make dicom_in folder
+  file:
+    path: "{{ loris_installation_path }}/dicom_in/"
+    state: directory
+    group: "{{ df_group }}"
+    mode: u=rwx,g=rwx,o=rx
+    recurse: yes
+
+- name: building docker-compose containers
+  docker_compose:
+    project_src: "{{ loris_installation_path }}"
+
+
+- name: wait for MYSQL container to be fully operational
+  wait_for:
+    timeout: 120
+
+- name: create LORIS database in MYSQL container
+  shell:
+    cmd: "docker exec -it {{ mysql_container_name }} bash /data/loris/aueb/setup.sh"
+
+...

@@ -1,0 +1,20 @@
+# install python packages
+- name: install python pip3
+  apt:
+    name: python3-pip
+
+- name: install python pip
+  apt:
+    name: python-pip
+
+- name: install docker python lib
+  pip:
+    name: docker
+
+
+- name: install datafactory wrapper requirements.txt
+  pip:
+    requirements: "{{ df_installation_path }}/requirements.txt"
+    executable: pip3
+
+

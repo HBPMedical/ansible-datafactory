@@ -4,7 +4,7 @@
   file:
     path: "{{ df_installation_path }}"
     state: directory
-    group: "{{ df_user }}"
+    group: "{{ df_group }}"
     recurse: yes
 
 # run 
@@ -12,108 +12,87 @@
   git:
     repo: https://github.com/aueb-wim/ehr-datafactory-template.git
     dest: "{{ df_installation_path }}"
+    force: yes
 
 - name: update property rights for DataFactory config folder 
   file:
     path: "{{ df_installation_path }}"
     state: directory
-    group: "{{ df_user }}"
-    mode: u=rwx,g=rwx,o=rw
+    group: "{{ df_group }}"
+    mode: u=rwx,g=rwx,o=rx
     recurse: yes
 
 - name: create DataFactory data folder 
   file:
     path: "{{ df_data_root_path }}"
     state: directory
-    group: "{{ df_user }}"
-    mode: u=rwx,g=rwx,o=rw
-    recurse: yes
-
-- name: create DataFactory EHR folder 
-  file:
-    path: "{{ df_ehr_path }}"
-    state: directory
-    mode: u=rwx,g=rwx,o=rw
-    group: "{{ df_user }}"
+    group: "{{ df_group }}"
+    mode: u=rwx,g=rwx,o=rx
     recurse: yes
 
 - name: create DataFactory EHR data input folder 
   file:
     path: "{{ df_ehr_input_path }}"
     state: directory
-    group: "{{ df_user }}"
-    mode: u=rwx,g=rwx,o=rw
+    group: "{{ df_group }}"
+    mode: u=rwx,g=rwx,o=rx
     recurse: yes
 
 - name: create DataFactory imaging data input folder 
   file:
     path: "{{ df_imaging_source_path }}"
     state: directory
-    group: "{{ df_user }}"
-    mode: u=rwx,g=rwx,o=rw
+    group: "{{ df_group }}"
+    mode: u=rwx,g=rwx,o=rx
     recurse: yes
 
 - name: create DataFactory raw NIFTI  data input folder 
   file:
     path: "{{ df_nmm_nifti_raw_input }}"
     state: directory
-    group: "{{ df_user }}"
-    mode: u=rwx,g=rwx,o=rw
+    group: "{{ df_group }}"
+    mode: u=rwx,g=rwx,o=rx
     recurse: yes
 
 - name: create DataFactory NIFTI  data input folder 
   file:
     path: "{{ df_nmm_nifti_input }}"
     state: directory
-    group: "{{ df_user }}"
-    mode: u=rwx,g=rwx,o=rw
+    group: "{{ df_group }}"
+    mode: u=rwx,g=rwx,o=rx
     recurse: yes
 
 - name: create DataFactory raw DICOM data input folder 
   file:
     path: "{{ df_nmm_dicom_raw_input }}"
     state: directory
-    mode: u=rwx,g=rwx,o=rw
-    group: "{{ df_user }}"
+    mode: u=rwx,g=rwx,o=rx
+    group: "{{ df_group }}"
     recurse: yes
 
 - name: create DataFactory DICOM data input folder 
   file:
     path: "{{ df_nmm_dicom_input }}"
     state: directory
-    mode: u=rwx,g=rwx,o=rw
-    group: "{{ df_user }}"
+    mode: u=rwx,g=rwx,o=rx
+    group: "{{ df_group }}"
     recurse: yes
 
-- name: create DataFactory SPM12 output folder 
-  file:
-    path: "{{ df_nmm_spm12_output }}"
-    state: directory
-    mode: u=rwx,g=rwx,o=rw
-    group: "{{ df_user }}"
-    recurse: yes
     
 - name: create DataFactory data output folder 
   file:
     path: "{{ df_output_path }}"
     state: directory
-    mode: u=rwx,g=rwx,o=rw
-    group: "{{ df_user }}"
+    mode: u=rwx,g=rwx,o=rx
+    group: "{{ df_group }}"
     recurse: yes
 
 - name: create DataFactory anonymized data output folder 
   file:
     path: "{{ df_anon_output_path }}"
     state: directory
-    mode: u=rwx,g=rwx,o=rw
-    group: "{{ df_user }}"
+    mode: u=rwx,g=rwx,o=rx
+    group: "{{ df_group }}"
     recurse: yes
-
-# Create folders and tranform template files
-
-- name: setting up config.json 
-  template:
-    src: config.json.j2
-    dest: "{{ df_config_path }}"
 
 

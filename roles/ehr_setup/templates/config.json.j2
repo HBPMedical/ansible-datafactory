@@ -14,7 +14,7 @@
         "imaging": {
             "root": "{{ mipmap_imaging }}",
             "mapping": {
-                "input_files": ["volumes.csv", "mri_visits.csv"],
+                "input_files": ["volumes.csv", "{{ mri_visit_file }}"],
                 "processed_files" : ["volumes_df.csv"]
             }
         },
@@ -24,24 +24,49 @@
         }
     },
     "sql_scripts_folder":"{{ mipmap_export }}",
-    "flatening":{
-        "export_csv_name": "harmonized_clinical_data.csv",
+    "flattening":{
         "output_folder": "{{ df_output_path }}",
         "strategy":{
-            "simple":"pivot_i2b2_MinDate_NEW19_a.sql",
-            "6months": "pivot_i2b2_6_months_MRI_Diag.sql",
-            "lognitude":"pivot_i2b2_longitudinal.sql"
+            "mindate":{
+                "sql": "pivot_i2b2_MinDate.sql",
+                "csv": "harmonized_clinical_data_min.csv"
+            },
+            "maxdate":{
+                "sql":"pivot_i2b2_MaxDate.sql",
+                "csv":"harmonized_clinical_data_max.csv"
+            },
+            "6months":{
+                "sql":"pivot_i2b2_6_months_MRI_Diag.sql",
+                "csv":"harmonized_clinical_data.csv"
+            },
+            "longitude":{
+                "sql": "pivot_i2b2_longitudinal.sql",
+                "csv": "harmonized_clinical_data_long.csv"
+            }
         }
     },
     "anonymization":{
-        "anonymized_csv_name": "harmonized_clinical_anon_data.csv",
         "anonymization_sql": "anonymize_db_ides.sql",
+        "output_folder": "{{ df_anon_output_path }}",
+        "hash_method": "sha224",
         "strategy":{
-            "simple": "pivot_i2b2_MinDate_NEW19_a_fed.sql",
-            "6months": "pivot_i2b2_6_months_MRI_Diag_fed.sql",
-            "lognitude":"pivot_i2b2_longitudinal_fed.sql"
-        },
-        "output_folder": "{{ df_anon_output_path }}"
+            "mindate":{
+                "sql": "pivot_i2b2_MinDate_fed.sql",
+                "csv": "harmonized_clinical_data_min_anon.csv"
+            },
+            "maxdate":{
+                "sql":"pivot_i2b2_MaxDate_fed.sql",
+                "csv":"harmonized_clinical_data_max_anon.csv"
+            },
+            "6months":{
+                "sql":"pivot_i2b2_6_months_MRI_Diag_fed.sql",
+                "csv":"harmonized_clinical_data_anon.csv"
+            },
+            "longitude":{
+                "sql": "pivot_i2b2_longitudinal_fed.sql",
+                "csv": "harmonized_clinical_data_long_anon.csv"
+            }
+        }        
     },
     "db_docker":{
         "container_name": "{{ postgresql_container }}",
@@ -57,11 +82,11 @@
         "input_folders": {
             "nifti": {
                 "raw" : "{{ df_nmm_nifti_raw_input }}",
-                "root": "{{ df_nmm_nifti_input }}"
+                "organized": "{{ df_nmm_nifti_input }}"
             },
             "dicom": {
                 "raw": "{{ df_nmm_dicom_raw_input }}",
-                "root": "{{ df_nmm_dicom_input }}"
+                "organized": "{{ df_nmm_dicom_input }}"
             }
         },
         "output_folders": {

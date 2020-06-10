@@ -3,5 +3,7 @@
 
 - include_tasks: config_df.yml
 - include_tasks: createfolders.yml
-- include_tasks: setup.yml
+- include_tasks: update_files.yml
+- include_tasks: install_python_req.yml
+- include_tasks: createdbs.yml
 ...

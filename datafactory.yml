@@ -1,37 +1,36 @@
 - hosts: hospitalserver
   vars:
     hospital_name: "MockHospital"
-    postgresql_container: "test_postgres"
+    postgresql_container: "df_postgres"
     postgresql_user: "postgres"
     postgresql_pwd: "1234"
-    postgresql_port: "5432"
+    postgresql_port: "55432"
     capture_db: "i2b2_capture"
     harmonize_db: "i2b2_harmonized"
     mipmap_db: "mipmap"
-    df_user: "datafactory"
+    df_group: "datafactory"
     df_pwd: "$6$YrESLr0sjlQFF$05g9uWjaAWa08J3Gaid3ZrYSkDIHpNOhrNoxZvCkhxbcA726Ez6MgY4/D6Lm5DcgN8fVxQ85eEKfXJcItFGfy1"
     df_installation_path: /opt/DataFactory
     df_data_root_path: /data/DataFactory
-    df_config_path: /opt/DataFactory/config.json
-    df_requirements_path: /opt/DataFactory/requirements.txt
     df_db_properties: /opt/DataFactory/dbproperties
     df_output_path: /data/DataFactory/output/
     df_anon_output_path: /data/DataFactory/anonymized_output/
-    df_ehr_path: /data/DataFactory/EHR
-    df_ehr_input_path: /data/DataFactory/EHR/input
+    df_ehr_input_path: /data/DataFactory/EHR/
     df_imaging_source_path: /data/DataFactory/imaging/
-    df_nmm_nifti_raw_input: /data/DataFactory/anonymized_output/
-    df_nmm_nifti_input: /data/DataFactory/MRI/input/nifti/
-    df_nmm_dicom_raw_input: /data/DataFactory/MRI/input/raw/dicom
-    df_nmm_dicom_input: /data/DataFactory/MRI/input/dicom
-    df_nmm_spm12_output: /data/DataFactory/MRI/output/spm12
+    df_nmm_spm12_output: /data/DataFactory/imaging/
+    df_nmm_nifti_raw_input: /data/DataFactory/MRI/nifti/raw/
+    df_nmm_nifti_input: /data/DataFactory/MRI/nifti/organized/
+    df_nmm_dicom_raw_input: /data/DataFactory/MRI/dicom/raw/
+    df_nmm_dicom_input: /data/DataFactory/MRI/dicom/organized/
     mipmap_preprocess: /opt/DataFactory/mipmap_mappings/preprocess_step
     mipmap_capture: /opt/DataFactory/mipmap_mappings/capture_step
     mipmap_harmonize: /opt/DataFactory/mipmap_mappings/harmonize_step
     mipmap_imaging: /opt/DataFactory/mipmap_mappings/imaging_step
     mipmap_export: /opt/DataFactory/export_step
+    mri_visit_file: "mri_visits.csv"
 
   become: true
   roles:
   - ehr_setup
+  - loris_setup
 ...

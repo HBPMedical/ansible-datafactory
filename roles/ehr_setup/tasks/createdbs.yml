@@ -1,19 +1,25 @@
 ---
-# install python libs
-- name: install python pip3
-  apt:
-    name: python3-pip
+# create Data Factory postgreSQL container and databases
+- name: create postgresql container
+  docker_container:
+    name: '{{ postgresql_container }}'
+    image: 'postgres:9.6'
+    env:
+      POSTGRES_USER: "{{ postgresql_user }}"
+      POSTGRES_PASSWORD: "{{ postgresql_pwd }}"
+    ports:
+      '{{ postgresql_port }}:5432'
+
+- name: wait for postgres container to be fully operational
+  wait_for:
+    timeout: 120
 
 
-- name: install docker python lib
-  pip:
-    name: docker 
-
-
-# Create mipmap i2b2 databases
-- name: creating mipmap databases 
-  command: sh /opt/DataFactory/dbsetup/build_dbs.sh
-
+- name: create mipmap database 
+  shell:
+    cmd: docker exec -it {{ postgresql_container }} psql -U {{ postgresql_user }} -d postgres -c "CREATE DATABASE {{ mipmap_db }};"
+    
+  
 - name: setup i2b2 capture db
   docker_container:
     name: 'i2b2-setup-capture'
