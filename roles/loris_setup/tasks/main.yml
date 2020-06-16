@@ -39,6 +39,6 @@
 
 - name: create LORIS database in MYSQL container
   shell:
-    cmd: "docker exec -it {{ mysql_container_name }} bash /data/loris/aueb/setup.sh"
+    cmd: "docker exec -it {{ apache_container_name }} bash /data/loris/aueb/setup.sh"
 
 ...

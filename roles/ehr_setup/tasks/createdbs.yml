@@ -14,11 +14,19 @@
   wait_for:
     timeout: 120
 
+- name: remove previous mipmap database if exist
+  shell:
+    cmd: docker exec -it {{ postgresql_container }} psql -U {{ postgresql_user }} -d postgres -c "DROP DATABASE IF EXISTS {{ mipmap_db }};"
+    
 
 - name: create mipmap database 
   shell:
     cmd: docker exec -it {{ postgresql_container }} psql -U {{ postgresql_user }} -d postgres -c "CREATE DATABASE {{ mipmap_db }};"
-    
+
+
+- name: remove previous capture database if exist
+  shell:
+    cmd: docker exec -it {{ postgresql_container }} psql -U {{ postgresql_user }} -d postgres -c "DROP DATABASE IF EXISTS {{ capture_db }};"
   
 - name: setup i2b2 capture db
   docker_container:
@@ -30,6 +38,10 @@
       DB_URL: 'postgresql://{{ postgresql_user }}:{{ postgresql_pwd }}@postgres_host:{{ postgresql_port }}/{{ capture_db }}'
     links: 
       - '{{ postgresql_container }}:postgres_host'
+
+- name: remove previous harmonized database if exist
+  shell:
+    cmd: docker exec -it {{ postgresql_container }} psql -U {{ postgresql_user }} -d postgres -c "DROP DATABASE IF EXISTS {{ harmonize_db }};"
 
 - name: setup i2b2 harmonize db
   docker_container:
