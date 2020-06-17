@@ -30,6 +30,7 @@
 
 - name: building docker-compose containers
   docker_compose:
+    build: yes
     project_src: "{{ loris_installation_path }}"
 
 
